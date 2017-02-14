@@ -1,19 +1,34 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="fileapp">
   <head>
     <meta charset="UTF-8">
     <title>Hello World!</title>
+    <script src="node_modules/angular/angular.js"></script>
   </head>
-  <body>
-    <h1>Hello World!</h1>
-    <!-- All of the Node.js APIs are available in this renderer process. -->
-    We are using Node.js <script>document.write(process.versions.node)</script>,
-    Chromium <script>document.write(process.versions.chrome)</script>,
-    and Electron <script>document.write(process.versions.electron)</script>.
+  <body ng-controller="FileController">
+    
+    <div style="width:200px;height:auto;border:1px solid blue;float:left">
+        <button ng-click="nextFunction()">Read Files</button> 
+        <ul>
+
+          <li ng-repeat="file in files track by $index" style="border:1px solid #ccc">{{file}}</li>
+        </ul>
+    </div>
+
+    <div style="width:200px;height:auto;border:1px solid red;float:left">
+        
+    </div>
+    <script>
+      // You can also require other files to run in this process
+      require('./renderer.js')
+
+    </script>
+
+    <script src="app/directives/directives.js"></script>
+    <script src="app/angular-app.js"></script>
   </body>
 
-  <script>
-    // You can also require other files to run in this process
-    require('./renderer.js')
-  </script>
+  
+
+
 </html>
