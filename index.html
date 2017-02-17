@@ -4,11 +4,21 @@
     <meta charset="UTF-8">
     <title>Hello World!</title>
     <script src="node_modules/angular/angular.js"></script>
+    <script src="bower_components/ngstorage/ngStorage.min.js"></script>
+    <script src="https://simplewebrtc.com/latest-v2.js"></script>
   </head>
   <body ng-controller="FileController">
     
     <div style="width:200px;height:auto;border:1px solid blue;float:left">
-        <button ng-click="nextFunction()">Read Files</button> 
+        <button ng-click="nextFunction()">Set shared folder</button> 
+
+        <label>{{key}}</label>
+        <input type="text" name="con_id" id="con_id" ng-model="peerKey">
+        <button ng-click="peerConnect(peerKey)">Connect</button> 
+
+
+        <input type="file" name="peerFile" id="peerFile" ng-model="peerFile">
+        <button ng-click="peerSend()">Message</button> 
         <ul>
 
           <li ng-repeat="file in files track by $index" style="border:1px solid #ccc">{{file}}</li>
@@ -23,7 +33,7 @@
       require('./renderer.js')
 
     </script>
-
+    
     <script src="app/directives/directives.js"></script>
     <script src="app/angular-app.js"></script>
   </body>
