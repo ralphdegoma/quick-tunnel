@@ -9,25 +9,31 @@
   </head>
   <body ng-controller="FileController">
     
-    <div style="width:200px;height:auto;border:1px solid blue;float:left">
+    <div style="width:600px;height:auto;border:1px solid blue;float:left">
         <button ng-click="nextFunction()">Set shared folder</button> 
-
-        <label>{{key}}</label>
-        <input type="text" name="con_id" id="con_id" ng-model="peerKey">
-        <button ng-click="peerConnect(peerKey)">Connect</button> 
-
-
-        <input type="file" name="peerFile" id="peerFile" ng-model="peerFile">
-        <button ng-click="peerSend()">Message</button> 
-        <ul>
-
-          <li ng-repeat="file in files track by $index" style="border:1px solid #ccc">{{file}}</li>
-        </ul>
-    </div>
-
-    <div style="width:200px;height:auto;border:1px solid red;float:left">
         
+        <ul>
+          <li ng-repeat="file in files track by $index" style="border:1px solid #ccc;list-style-type: none">
+          {{file}}
+          <input type="checkbox" name="fileIndex[$index]" style="float: right">
+          </li>
+        </ul>
+
+        <button ng-click="peerSend()">Send</button> 
     </div>
+
+    <div style="width:600px;height:auto;border:1px solid red;float:left">
+        
+        <ul>
+          <li ng-repeat="file in peerFiles track by $index" style="border:1px solid #ccc;list-style-type: none">
+          {{file}}
+          <input type="checkbox" name="peerFileIndex[$index]" style="float: right">
+          </li>
+        </ul>
+
+    </div>
+
+
     <script>
       // You can also require other files to run in this process
       require('./renderer.js')

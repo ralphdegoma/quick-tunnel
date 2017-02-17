@@ -24,6 +24,11 @@
 		$scope.peerInst;
 		$scope.peerKey;
 		$scope.peerMessage;
+		$scope.fileIndex = [];
+
+		$scope.peerFiles = [];
+		$scope.peerFileIndex = [];
+
 
 		appEx.post('/test', function (req, res) {
 		  res.send('Hello World!')
@@ -53,10 +58,21 @@
                 	console.log(data.payload.blob)
                 	$scope.saveUploaded(data.payload.blob);
                 }
+
+                if(data.type === 'peerStructure'){
+                	$scope.peerFiles = data.payload.files;
+                	$scope.$apply();
+                	console.log($scope.peerFiles)
+                }
             });
 
 			$scope.peerInst.on('createdPeer', function (peer) {
 			    console.log('createdPeer', peer);
+
+
+			    //sending file structure to peers
+			    $scope.peerInst.sendToAll("peerStructure", {files: $scope.files});
+
 			    $scope.peerConnect = peer; 
 			    $scope.peerConnect.on('fileTransfer', function (metadata, receiver) {
 				    console.log('incoming filetransfer', metadata.name, metadata);
@@ -87,7 +103,14 @@
 		        }else {
 		            console.log("No path selected");
 		        }
+		        $scope.files = [];
+		        $scope.files = path[0];
+		        $scope.readFiles(path[0])
+		        $scope.peerInst.sendToAll("peerStructure", {files: $scope.files});
+
 		    });
+
+
 		}
 		$scope.readFiles =  function (orig_dir){
 		    fs.readdir(orig_dir, (err, dir) => {
